@@ -13,8 +13,13 @@ def create_user():
     db.session.commit()
     return jsonify({"message": "Usuário criado com sucesso!"}), 201
 
+@app.route('/users', methods=['GET'])
+def create_user():
+    data = request.get_json()
+    new_user = User(name=data['name'])
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "Usuário criado com sucesso!"}), 201    
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
