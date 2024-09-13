@@ -1,11 +1,9 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://<username>:<password>@<servername>.database.windows.net/<dbname>?driver=ODBC+Driver+17+for+SQL+Server'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+cx_oracle://<username>:<password>@oracle.fiap.com.br:1521/orcl'
 db = SQLAlchemy(app)
-
-# Lembre-se de substituir <username>, <password>, <servername> e <dbname> com as informações do seu SQL Server no Azure.
 
 @app.route('/users', methods=['POST'])
 def create_user():
@@ -14,5 +12,9 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"message": "Usuário criado com sucesso!"}), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
