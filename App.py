@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+cx_oracle://<username>:<password>@oracle.fiap.com.br:1521/orcl'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+cx_oracle://RM551007:030803@oracle.fiap.com.br:1521/orcl'
 db = SQLAlchemy(app)
 
 @app.route('/users', methods=['POST'])
