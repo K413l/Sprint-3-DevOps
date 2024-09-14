@@ -7,7 +7,7 @@ db = SQLAlchemy(app)
 
 # Modelo para a tabela BANCO
 class Banco(db.Model):
-    __tablename__ = 'BANCO'
+    __tablename__ = 'TB_BANCO'
     id_banco = db.Column('ID_BANCO', db.Integer, primary_key=True)
     nm_banco = db.Column('NM_BANCO', db.String(100), nullable=True)
     cd_banco = db.Column('CD_BANCO', db.String(10), nullable=True)
