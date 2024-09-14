@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+cx_oracle://RM551007:030803@oracle.fiap.com.br:1521/orcl'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl'
 db = SQLAlchemy(app)
 
 # Modelo para a tabela BANCO
@@ -12,7 +12,10 @@ class Banco(db.Model):
     nm_banco = db.Column('NM_BANCO', db.String(100), nullable=True)
     cd_banco = db.Column('CD_BANCO', db.String(10), nullable=True)
 
-db.create_all()
+# Função para criar o banco de dados
+def create_database():
+    with app.app_context():  # Cria um contexto de aplicação
+        db.create_all()
 
 @app.route('/bancos', methods=['POST'])
 def create_banco():
@@ -57,4 +60,6 @@ def delete_banco(id):
     return jsonify({"message": "Banco excluído com sucesso!"})
 
 if __name__ == '__main__':
+    app.run(debug=True)
+    create_database()  # Chama a função para criar as tabelas no banco
     app.run(debug=True)
