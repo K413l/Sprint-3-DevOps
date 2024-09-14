@@ -18,7 +18,7 @@ def create_database():
         db.create_all()
 
 @app.route('/', methods=['GET'])
-    print('Hello World')
+print('Hello World')
 
 @app.route('/bancos', methods=['POST'])
 def create_banco():
