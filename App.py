@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)  # Corrigido
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl'
-db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl'
+#db = SQLAlchemy(app)
 
 # Modelo para a tabela BANCO
 class Banco(db.Model):
