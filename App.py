@@ -1,22 +1,27 @@
-import os
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+app = Flask(__name__)  # Corrigido
 
-# Use environment variable for database URI
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI', 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl'
 db = SQLAlchemy(app)
 
+# Modelo para a tabela BANCO
 class Banco(db.Model):
     __tablename__ = 'TB_BANCO'
     id_banco = db.Column('ID_BANCO', db.Integer, primary_key=True)
     nm_banco = db.Column('NM_BANCO', db.String(100), nullable=True)
     cd_banco = db.Column('CD_BANCO', db.String(10), nullable=True)
 
+# Função para criar o banco de dados
+def create_database():
+    with app.app_context():  # Cria um contexto de aplicação
+        db.create_all()
+
 @app.route('/hello', methods=['POST'])
 def hello():
-    return jsonify({"message": "Hello World!"})
+    return jsonify({"message": "Hello World!"}), 201
 
 @app.route('/bancos', methods=['POST'])
 def create_banco():
@@ -60,7 +65,6 @@ def delete_banco(id):
     db.session.commit()
     return jsonify({"message": "Banco excluído com sucesso!"})
 
-if __name__ == '__main__':
-    # Use the environment variable for port, defaulting to 5000 if not set
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+if __name__ == '__main__':  # Corrigido
+    create_database()  # Chama a função para criar as tabelas no banco
+    app.run(debug=True)
