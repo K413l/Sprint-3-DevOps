@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)
 
 # Utilize a variável de ambiente definida no Azure
 app.config['SQLALCHEMY_DATABASE_URI'] = "oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl"
