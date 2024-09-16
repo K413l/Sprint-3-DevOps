@@ -1,3 +1,4 @@
 Flask
-Oracledb
 Flask-SQLAlchemy
+oracledb
+gunicorn
