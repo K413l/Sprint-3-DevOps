@@ -17,6 +17,10 @@ def create_database():
     with app.app_context():  # Cria um contexto de aplicação
         db.create_all()
 
+@app.route('/', methods=['POST'])
+def Hello():
+    print('Hello World!')
+
 @app.route('/bancos', methods=['POST'])
 def create_banco():
     data = request.get_json()
