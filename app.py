@@ -1,11 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import os
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
-
-# Utilize a variável de ambiente definida no Azure
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl"
 
 db = SQLAlchemy(app)
@@ -15,8 +11,9 @@ class Banco(db.Model):
     __tablename__ = 'TB_BANCO'
     id_banco = db.Column('ID_BANCO', db.Integer, primary_key=True)
     nm_banco = db.Column('NM_BANCO', db.String(100), nullable=False)
-    cd_banco = db.Column('CD_BANCO', db.String(10), nullable=False)
+    cd_banco = db.Column('CD_BANCO', db.String(10), nullable=False
     
+    )
     clientes = db.relationship('Cliente', backref='banco', lazy=True)
 
 # Modelo para a tabela TB_CLIENTE
@@ -125,4 +122,4 @@ def delete_cliente(id):
 
 if __name__ == '__main__':
     create_database()  # Cria as tabelas no banco de dados
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
