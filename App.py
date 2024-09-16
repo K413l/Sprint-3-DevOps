@@ -3,8 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# Configuração da string de conexão ao Oracle Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'oracle+oracledb://RM551007:030803@oracle.fiap.com.br:1521/orcl'
+# Utilize a variável de ambiente definida no Azure
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+
 db = SQLAlchemy(app)
 
 # Modelo para a tabela TB_BANCO
