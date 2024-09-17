@@ -54,9 +54,9 @@ https://<NomeDaSuaAplicacao>.azurewebsites.net
 
 que é encontrado na pagina visão geral
 
-#segue os dados JSON para teste:
+# segue os dados JSON para teste:
 
-#post TB_BANCOS
+# post TB_BANCOS
 
 [
     {
@@ -81,18 +81,18 @@ que é encontrado na pagina visão geral
     }
 ]
 
-#put TB_BANCO
+# put TB_BANCO
 
 {
     "nm_banco": "Banco do Brasil Atualizado",
     "cd_banco": "001"
 }
 
-#delete TB_BANCO
+# delete TB_BANCO
 
 DELETE /bancos/1
 
-#post TB_CLIENTE
+# post TB_CLIENTE
 
 [
     {
@@ -127,7 +127,7 @@ DELETE /bancos/1
     }
 ]
 
-#put TB_CLIENTES
+# put TB_CLIENTES
 
 {
     "nm_cliente": "João Silva Atualizado",
@@ -136,6 +136,6 @@ DELETE /bancos/1
     "id_banco": 2
 }
 
-#delete TB_CLIENTES
+# delete TB_CLIENTES
 
 DELETE /clientes/1
