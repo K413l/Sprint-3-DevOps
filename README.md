@@ -1,10 +1,51 @@
 # Sprint-3-DevOps
-Sprint 3 DevOps
 
-para fazer o passo a passo a seguir será necessário uma conta na Azure
+Deploy de Aplicação Flask com Oracle DB no Azure
+Este projeto é uma aplicação Flask que utiliza Oracle DB como banco de dados e é hospedada no Azure utilizando o serviço de App Service para o deploy contínuo via GitHub. O objetivo deste guia é ensinar como configurar todo o ambiente e realizar o deploy da aplicação.
 
+Pré-requisitos
+Antes de começar, você precisará:
 
+Conta no Azure
+Conta no GitHub
+Azure CLI instalada na sua máquina
+Python 3.x e pip instalados
+Oracle Instant Client instalado
+Passo 1: Criar um plano de serviço e grupo de recursos no Azure
+Primeiro, você deve criar um grupo de recursos, um plano de serviço para o App Service e um App Service para hospedar sua aplicação.
 
+Script para criar os recursos no Azure
+Abra o terminal e execute os seguintes comandos:
+
+bash
+Copy code
+# 1. Faça login na sua conta Azure
+az login
+
+# 2. Crie um grupo de recursos
+az group create --name FlaskOracleGroup --location "East US"
+
+# 3. Crie um plano de serviço para o App Service (SKU define o tipo de plano, aqui usamos 'B1' que é a camada básica)
+az appservice plan create --name FlaskOraclePlan --resource-group FlaskOracleGroup --sku B1 --is-linux
+
+# 4. Crie o App Service (que hospedará a aplicação)
+az webapp create --resource-group FlaskOracleGroup --plan FlaskOraclePlan --name NomeDaSuaAplicacao --runtime "PYTHON|3.9"
+
+# 5. Configure as variáveis de ambiente necessárias para o Oracle DB
+az webapp config appsettings set --resource-group FlaskOracleGroup --name NomeDaSuaAplicacao --settings \
+    ORACLE_HOST=<seu-host-do-db> \
+    ORACLE_PORT=1521 \
+    ORACLE_SID=orcl \
+    ORACLE_USER=<seu-usuario> \
+    ORACLE_PASSWORD=<sua-senha>
+Explicação dos comandos:
+az login: Faz login na sua conta Azure.
+az group create: Cria um grupo de recursos, que agrupa os recursos da sua aplicação.
+az appservice plan create: Cria um plano de serviço para o App Service, definindo as especificações de hardware da sua aplicação.
+az webapp create: Cria o App Service, onde sua aplicação será hospedada.
+az webapp config appsettings set: Configura as variáveis de ambiente do Oracle Database para serem acessadas pela aplicação Flask.
+
+segue os dados JSON para teste:
 
 post TB_BANCOS
 
