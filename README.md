@@ -28,7 +28,10 @@ az group create --name FlaskOracleGroup --location "East US"
 az appservice plan create --name FlaskOraclePlan --resource-group FlaskOracleGroup --sku B1 --is-linux
 
 # 4. Crie o App Service (que hospedará a aplicação)
-az webapp create --resource-group FlaskOracleGroup --plan FlaskOraclePlan --name NomeDaSuaAplicacao --runtime "PYTHON|3.9"
+az webapp create --resource-group FlaskOracleGroup --plan FlaskOraclePlan --name NomeDaSuaAplicacao --runtime "PYTHON|3.11"
+
+# 5. Configure o comando de inicialização para o App Service
+az webapp config set --resource-group FlaskOracleGroup --name NomeDaSuaAplicacao --startup-file "gunicorn --workers 3 --bind 0.0.0.0:8000 app:app"
 
 Explicação dos comandos:
 az login: Faz login na sua conta Azure.
