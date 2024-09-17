@@ -1,7 +1,7 @@
 # Sprint-3-DevOps
 
 Deploy de Aplicação Flask com Oracle DB no Azure
-Este projeto é uma aplicação Flask que utiliza Oracle DB como banco de dados e é hospedada no Azure utilizando o serviço de App Service para o deploy contínuo via GitHub. O objetivo deste guia é ensinar como configurar todo o ambiente e realizar o deploy da aplicação.
+Este projeto é uma aplicação Flask que utiliza Oracle DB como banco de dados e é hospedada no Azure utilizando o serviço de App Service para o deploy contínuo via GitHub. O objetivo deste guia é ensinar como configurar todo o ambiente e realizar o deploy da aplicação diretamente no Azure.
 
 Pré-requisitos
 Antes de começar, você precisará:
@@ -9,7 +9,6 @@ Antes de começar, você precisará:
 Conta no Azure
 Conta no GitHub
 Azure CLI instalada na sua máquina
-Python 3.x e pip instalados
 Oracle Instant Client instalado
 Passo 1: Criar um plano de serviço e grupo de recursos no Azure
 Primeiro, você deve criar um grupo de recursos, um plano de serviço para o App Service e um App Service para hospedar sua aplicação.
@@ -17,8 +16,8 @@ Primeiro, você deve criar um grupo de recursos, um plano de serviço para o App
 Script para criar os recursos no Azure
 Abra o terminal e execute os seguintes comandos:
 
-bash
-Copy code
+no cmd da sua maquina:
+
 # 1. Faça login na sua conta Azure
 az login
 
@@ -31,23 +30,33 @@ az appservice plan create --name FlaskOraclePlan --resource-group FlaskOracleGro
 # 4. Crie o App Service (que hospedará a aplicação)
 az webapp create --resource-group FlaskOracleGroup --plan FlaskOraclePlan --name NomeDaSuaAplicacao --runtime "PYTHON|3.9"
 
-# 5. Configure as variáveis de ambiente necessárias para o Oracle DB
-az webapp config appsettings set --resource-group FlaskOracleGroup --name NomeDaSuaAplicacao --settings \
-    ORACLE_HOST=<seu-host-do-db> \
-    ORACLE_PORT=1521 \
-    ORACLE_SID=orcl \
-    ORACLE_USER=<seu-usuario> \
-    ORACLE_PASSWORD=<sua-senha>
 Explicação dos comandos:
 az login: Faz login na sua conta Azure.
 az group create: Cria um grupo de recursos, que agrupa os recursos da sua aplicação.
 az appservice plan create: Cria um plano de serviço para o App Service, definindo as especificações de hardware da sua aplicação.
 az webapp create: Cria o App Service, onde sua aplicação será hospedada.
 az webapp config appsettings set: Configura as variáveis de ambiente do Oracle Database para serem acessadas pela aplicação Flask.
+Passo 2: Configurar o Deploy Contínuo do GitHub
+Agora vamos configurar o deploy contínuo para que as alterações feitas no GitHub sejam automaticamente aplicadas ao App Service.
 
-segue os dados JSON para teste:
+No portal do Azure, vá para App Services e selecione o App criado.
+No painel esquerdo, vá até Deployment Center.
+Selecione GitHub como fonte, escolha seu repositório e branch.
+O Azure irá configurar o deploy contínuo a partir do seu repositório no GitHub.
 
-post TB_BANCOS
+Passo 3: Fazer o Deploy
+Com o deploy contínuo configurado, qualquer alteração feita no GitHub será automaticamente aplicada ao App Service. Quando fizer uma mudança no código, use o GitHub para enviar suas atualizações.
+
+Passo 4: Acessar a Aplicação no Azure
+Uma vez que o deploy estiver concluído, sua aplicação estará acessível em:
+
+https://<NomeDaSuaAplicacao>.azurewebsites.net
+
+que é encontrado na pagina visão geral
+
+#segue os dados JSON para teste:
+
+#post TB_BANCOS
 
 [
     {
@@ -72,15 +81,18 @@ post TB_BANCOS
     }
 ]
 
-put TB_BANCO
+#put TB_BANCO
 
 {
     "nm_banco": "Banco do Brasil Atualizado",
     "cd_banco": "001"
 }
 
+#delete TB_BANCO
 
-post TB_CLIENTE
+DELETE /bancos/1
+
+#post TB_CLIENTE
 
 [
     {
@@ -115,7 +127,7 @@ post TB_CLIENTE
     }
 ]
 
-put TB_CLIENTES
+#put TB_CLIENTES
 
 {
     "nm_cliente": "João Silva Atualizado",
@@ -124,3 +136,6 @@ put TB_CLIENTES
     "id_banco": 2
 }
 
+#delete TB_CLIENTES
+
+DELETE /clientes/1
